@@ -78,23 +78,22 @@ public class CalendarScrollViewActivity extends Activity {
 
 
         //@TODO 这里设置延时，因为立即设置界面还没有绘制完成，考虑添加绘制完成监听
-        new Handler(getMainLooper()).postDelayed(new Runnable() {
+        container.post(new Runnable() {
             @Override
             public void run() {
                 initEventDays((CalendarView) adapter.getChildView(0));
             }
-        }, 1000);
+        });
     }
 
     /**
-     *
      * @param calendarView
      */
     private void initEventDays(CalendarView calendarView) {
         //设置含有事件的日期 1-9号
         List<String> eventDays = new ArrayList<>();//根据实际情况调整，传入时间格式(yyyy-MM)
-        for(int j=0;j<10;j++) {
-            eventDays.add(calendarView.getCurrentDay()+"-0"+j);
+        for (int j = 0; j < 10; j++) {
+            eventDays.add(calendarView.getCurrentDay() + "-0" + j);
         }
         calendarView.setEventDays(eventDays);
     }

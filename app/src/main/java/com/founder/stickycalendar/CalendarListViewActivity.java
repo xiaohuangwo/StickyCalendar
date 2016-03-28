@@ -93,13 +93,12 @@ public class CalendarListViewActivity extends Activity {
         vpCalender.addOnPageChangeListener(new OnMyViewPageChangeListener());
 
 
-        //@TODO 这里设置延时，因为立即设置界面还没有绘制完成，考虑添加绘制完成监听
-        new Handler(getMainLooper()).postDelayed(new Runnable() {
+        container.post(new Runnable() {
             @Override
             public void run() {
                 initEventDays((CalendarView) adapter.getChildView(0));
             }
-        }, 1000);
+        });
     }
 
     /**

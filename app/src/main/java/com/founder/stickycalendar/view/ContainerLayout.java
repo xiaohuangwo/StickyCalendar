@@ -2,7 +2,6 @@ package com.founder.stickycalendar.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -313,18 +312,22 @@ public class ContainerLayout extends LinearLayout {
                         e.printStackTrace();
                     }
                 }
-                post(new Runnable() {
-                    public void run() {
-                        mHeader.scrollTo(mHeader.getScrollX(), 0);
-                        scrollCountY = 0;
-                        LayoutParams params = (LayoutParams) mContent.getLayoutParams();
-                        params.setMargins(0, 0, 0, 0);
-                        mContent.setLayoutParams(params);
-                        isInAnimation = false;
-                    }
-                });
+                open();
             }
         }.start();
+    }
+
+    private void open() {
+        post(new Runnable() {
+            public void run() {
+                mHeader.scrollTo(mHeader.getScrollX(), 0);
+                scrollCountY = 0;
+                LayoutParams params = (LayoutParams) mContent.getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                mContent.setLayoutParams(params);
+                isInAnimation = false;
+            }
+        });
     }
 
 

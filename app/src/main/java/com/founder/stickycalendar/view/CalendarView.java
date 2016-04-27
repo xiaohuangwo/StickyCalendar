@@ -26,6 +26,8 @@ public class CalendarView extends GridView {
     private CalendarAdapter calendarAdapter;
 
 
+    private List<String> eventDays = new ArrayList<>();
+
     public CalendarView(Context context, int jumpMonth, int year, int month) {
         super(context);
         initCalendarValues();
@@ -108,8 +110,6 @@ public class CalendarView extends GridView {
         public void onCalendarClick(int position, DateBean dateBean);
     }
 
-
-    List<String> eventDays = new ArrayList<>();
     /**
      * 设置含有事件的日期
      * @param eventDays

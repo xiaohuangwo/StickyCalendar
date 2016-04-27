@@ -3,7 +3,6 @@ package com.founder.stickycalendar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.AdapterView;
@@ -93,13 +92,12 @@ public class CalendarListViewActivity extends Activity {
         vpCalender.addOnPageChangeListener(new OnMyViewPageChangeListener());
 
 
-        //@TODO 这里设置延时，因为立即设置界面还没有绘制完成，考虑添加绘制完成监听
-        new Handler(getMainLooper()).postDelayed(new Runnable() {
+        vpCalender.post(new Runnable() {
             @Override
             public void run() {
                 initEventDays((CalendarView) adapter.getChildView(0));
             }
-        }, 1000);
+        });
     }
 
     /**

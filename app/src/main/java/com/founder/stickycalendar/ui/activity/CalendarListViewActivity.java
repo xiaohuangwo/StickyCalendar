@@ -20,6 +20,7 @@ import com.founder.stickycalendar.view.ContainerLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -57,7 +58,11 @@ public class CalendarListViewActivity extends Activity {
 
         String[] strs = new String[100];
         for (int i = 0; i < strs.length; i++) {
-            strs[i] = String.format("第%d行", i);
+            if(i%2==0) {
+                strs[i] = String.format(Locale.getDefault(),"第%d行,跳转至CalendarScrollViewActivity", i);
+            } else {
+                strs[i] = String.format(Locale.getDefault(),"第%d行,跳转至FragmentPagerActivity", i);
+            }
         }
         viewContent.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, strs));
@@ -65,8 +70,13 @@ public class CalendarListViewActivity extends Activity {
         viewContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent intent = new Intent();
-                intent.setClass(CalendarListViewActivity.this, CalendarScrollViewActivity.class);
+                if(position%2==0) {
+                    intent.setClass(CalendarListViewActivity.this, CalendarScrollViewActivity.class);
+                } else {
+                    intent.setClass(CalendarListViewActivity.this, FragmentPagerActivity.class);
+                }
                 startActivity(intent);
             }
         });

@@ -109,17 +109,13 @@ public class ContainerLayout extends LinearLayout {
     private void init() {
         if (mHeader == null && mContent == null) {
             minDistance = getResources().getDimensionPixelOffset(R.dimen.mindistance);
-            int headerId = getResources().getIdentifier("vp_calender", "id", getContext().getPackageName());
-            int contentId = getResources().getIdentifier("view_content", "id", getContext().getPackageName());
-            if (headerId != 0 && contentId != 0) {
-                mHeader = (ViewPager) findViewById(headerId);
-                mContent = (ViewGroup) findViewById(contentId);
+            mHeader = (ViewPager) findViewWithTag("vp_calender");
+            mContent = (ViewGroup) findViewWithTag("view_content");
 
-                if (mHeader != null) {
-                    headerOriginalHeight = mHeader.getMeasuredHeight();
-                }
-//                collapse();
+            if (mHeader != null) {
+                headerOriginalHeight = mHeader.getMeasuredHeight();
             }
+//                collapse();
         }
     }
 

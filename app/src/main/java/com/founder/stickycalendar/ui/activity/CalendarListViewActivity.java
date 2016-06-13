@@ -42,7 +42,7 @@ public class CalendarListViewActivity extends Activity {
 
 
     /**
-     * 日历向左或向右可翻动的天数
+     * 日历向左或向右可翻动的月
      */
     private int INIT_PAGER_INDEX = 120;
 

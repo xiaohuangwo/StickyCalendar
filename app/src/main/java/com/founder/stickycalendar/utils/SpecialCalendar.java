@@ -5,15 +5,25 @@ import android.util.Log;
 import java.util.Calendar;
 
 /**
- * 闰年月算法
+ * Title:日历算法
+ * Description:
  *
- * @author chaogege
+ * @author liu_yuwu
+ * @date 2016/1/21.
  */
 public class SpecialCalendar {
 
     public static final int CALENDAR_ITEM_SIZE = 42;
     public int currentPosition = 0;
 
+    /**
+     * 7*6=42的日期
+     *
+     * @param year
+     * @param month
+     * @param jumpMonth
+     * @return
+     */
     public DateBean[] getDateByYearMonth(int year, int month, int jumpMonth) {
         Calendar calCurrent = Calendar.getInstance();
         int[] realYearMonth = getRealYearMonth(year, month, jumpMonth);
@@ -81,6 +91,7 @@ public class SpecialCalendar {
 
     private int[] getRealYearMonth(int year, int month, int jumpMonth) {
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, 1);
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month + jumpMonth);
         return new int[]{calendar.get(Calendar.YEAR),

@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- * Title: 以当前月份分割，前100个月和后100个月的viewpager日历适配器
+ * Title: 以当前月份分割，前个100个月和后100个月的viewpager日历适配器
  * Description:
  *
  * @author liu_yuwu

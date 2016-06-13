@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Title: 日历gridview中的每一个item显示的textview
+ * Title: 日历gridview对应的adapter
  * Description:
  *
  * @author liu_yuwu

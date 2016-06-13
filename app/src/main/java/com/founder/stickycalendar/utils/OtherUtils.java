@@ -19,8 +19,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 /**
- * Created by wyouflf on 13-8-30.
+ * Title:listview内容的日历
+ * Description:
+ *
+ * @author liu_yuwu
+ * @date 2016/1/21.
  */
 public class OtherUtils {
 

@@ -1,14 +1,16 @@
-package com.founder.stickycalendar;
+package com.founder.stickycalendar.ui.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.founder.stickycalendar.R;
 import com.founder.stickycalendar.adapter.TopViewPagerAdapter;
 import com.founder.stickycalendar.utils.DateBean;
 import com.founder.stickycalendar.utils.OtherUtils;
@@ -18,22 +20,23 @@ import com.founder.stickycalendar.view.ContainerLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
- * Title:  scrollview内容的日历
+ * Title:listview内容的日历
  * Description:
  *
  * @author liu_yuwu
  * @date 2016/1/21.
  */
-public class CalendarScrollViewActivity extends Activity {
+public class CalendarListViewActivity extends Activity {
 
 
     private ContainerLayout container;
     private TextView txToday;
     private ViewPager vpCalender;
-    private ScrollView viewContent;
+    private ListView viewContent;
 
     private List<View> calenderViews = new ArrayList<>();
 
@@ -46,14 +49,37 @@ public class CalendarScrollViewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar_scrollview);
+        setContentView(R.layout.activity_calendar_listview);
 
-        Log.d("ContainerLayout", "开始初始化");
         container = (ContainerLayout) findViewById(R.id.container);
         txToday = (TextView) findViewById(R.id.tx_today);
         vpCalender = (ViewPager) findViewById(R.id.vp_calender);
-        viewContent = (ScrollView) findViewById(R.id.view_content);
+        viewContent = (ListView) findViewById(R.id.view_content);
+
+        String[] strs = new String[100];
+        for (int i = 0; i < strs.length; i++) {
+            if(i%2==0) {
+                strs[i] = String.format(Locale.getDefault(),"第%d行,跳转至CalendarScrollViewActivity", i);
+            } else {
+                strs[i] = String.format(Locale.getDefault(),"第%d行,跳转至FragmentPagerActivity", i);
+            }
+        }
+        viewContent.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, strs));
         initCalendar();
+        viewContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent();
+                if(position%2==0) {
+                    intent.setClass(CalendarListViewActivity.this, CalendarScrollViewActivity.class);
+                } else {
+                    intent.setClass(CalendarListViewActivity.this, FragmentPagerActivity.class);
+                }
+                startActivity(intent);
+            }
+        });
     }
 
     private void initCalendar() {
@@ -64,7 +90,7 @@ public class CalendarScrollViewActivity extends Activity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         for (int i = 0; i < 3; i++) {
-            CalendarView calendarView = new CalendarView(CalendarScrollViewActivity.this, i, year, month);
+            CalendarView calendarView = new CalendarView(CalendarListViewActivity.this, i, year, month);
             calendarView.setOnCalendarClickListener(new OnMyCalendarClickerListener());
             if (i == 0) {
                 container.setRowNum(calendarView.getColorDataPosition() / 7);
@@ -77,8 +103,7 @@ public class CalendarScrollViewActivity extends Activity {
         vpCalender.addOnPageChangeListener(new OnMyViewPageChangeListener());
 
 
-        //@TODO 这里设置延时，因为立即设置界面还没有绘制完成，考虑添加绘制完成监听
-        container.post(new Runnable() {
+        vpCalender.post(new Runnable() {
             @Override
             public void run() {
                 initEventDays((CalendarView) adapter.getChildView(0));

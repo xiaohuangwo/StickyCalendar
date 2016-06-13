@@ -3,6 +3,7 @@
 
 #使用方式
 1.layout中container和vp_calender两个id请不要修改
+2.
 
 #效果
-![image](https://github.com/wuda615/StickyCalendar/blob/master/demo1.gif) 
+![image](demo1.gif) 

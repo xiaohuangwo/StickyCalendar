@@ -2,7 +2,6 @@ package com.founder.stickycalendar.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -110,17 +109,13 @@ public class ContainerLayout extends LinearLayout {
     private void init() {
         if (mHeader == null && mContent == null) {
             minDistance = getResources().getDimensionPixelOffset(R.dimen.mindistance);
-            int headerId = getResources().getIdentifier("vp_calender", "id", getContext().getPackageName());
-            int contentId = getResources().getIdentifier("view_content", "id", getContext().getPackageName());
-            if (headerId != 0 && contentId != 0) {
-                mHeader = (ViewPager) findViewById(headerId);
-                mContent = (ViewGroup) findViewById(contentId);
+            mHeader = (ViewPager) findViewWithTag("vp_calender");
+            mContent = (ViewGroup) findViewWithTag("view_content");
 
-                if (mHeader != null) {
-                    headerOriginalHeight = mHeader.getMeasuredHeight();
-                }
-//                collapse();
+            if (mHeader != null) {
+                headerOriginalHeight = mHeader.getMeasuredHeight();
             }
+//                collapse();
         }
     }
 
@@ -313,18 +308,22 @@ public class ContainerLayout extends LinearLayout {
                         e.printStackTrace();
                     }
                 }
-                post(new Runnable() {
-                    public void run() {
-                        mHeader.scrollTo(mHeader.getScrollX(), 0);
-                        scrollCountY = 0;
-                        LayoutParams params = (LayoutParams) mContent.getLayoutParams();
-                        params.setMargins(0, 0, 0, 0);
-                        mContent.setLayoutParams(params);
-                        isInAnimation = false;
-                    }
-                });
+                open();
             }
         }.start();
+    }
+
+    private void open() {
+        post(new Runnable() {
+            public void run() {
+                mHeader.scrollTo(mHeader.getScrollX(), 0);
+                scrollCountY = 0;
+                LayoutParams params = (LayoutParams) mContent.getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+                mContent.setLayoutParams(params);
+                isInAnimation = false;
+            }
+        });
     }
 
 

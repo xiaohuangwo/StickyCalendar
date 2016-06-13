@@ -1,16 +1,14 @@
-package com.founder.stickycalendar;
+package com.founder.stickycalendar.ui.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.founder.stickycalendar.R;
 import com.founder.stickycalendar.adapter.TopViewPagerAdapter;
 import com.founder.stickycalendar.utils.DateBean;
 import com.founder.stickycalendar.utils.OtherUtils;
@@ -23,19 +21,19 @@ import java.util.List;
 
 
 /**
- * Title:listview内容的日历
+ * Title:  scrollview内容的日历
  * Description:
  *
  * @author liu_yuwu
  * @date 2016/1/21.
  */
-public class CalendarListViewActivity extends Activity {
+public class CalendarScrollViewActivity extends AppCompatActivity {
 
 
     private ContainerLayout container;
     private TextView txToday;
     private ViewPager vpCalender;
-    private ListView viewContent;
+    private ScrollView viewContent;
 
     private List<View> calenderViews = new ArrayList<>();
 
@@ -48,28 +46,14 @@ public class CalendarListViewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar_listview);
+        setContentView(R.layout.activity_calendar_scrollview);
 
+        Log.d("ContainerLayout", "开始初始化");
         container = (ContainerLayout) findViewById(R.id.container);
         txToday = (TextView) findViewById(R.id.tx_today);
         vpCalender = (ViewPager) findViewById(R.id.vp_calender);
-        viewContent = (ListView) findViewById(R.id.view_content);
-
-        String[] strs = new String[100];
-        for (int i = 0; i < strs.length; i++) {
-            strs[i] = String.format("第%d行", i);
-        }
-        viewContent.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, strs));
+        viewContent = (ScrollView) findViewById(R.id.view_content);
         initCalendar();
-        viewContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent();
-                intent.setClass(CalendarListViewActivity.this, CalendarScrollViewActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void initCalendar() {
@@ -80,7 +64,7 @@ public class CalendarListViewActivity extends Activity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         for (int i = 0; i < 3; i++) {
-            CalendarView calendarView = new CalendarView(CalendarListViewActivity.this, i, year, month);
+            CalendarView calendarView = new CalendarView(CalendarScrollViewActivity.this, i, year, month);
             calendarView.setOnCalendarClickListener(new OnMyCalendarClickerListener());
             if (i == 0) {
                 container.setRowNum(calendarView.getColorDataPosition() / 7);
@@ -93,7 +77,7 @@ public class CalendarListViewActivity extends Activity {
         vpCalender.addOnPageChangeListener(new OnMyViewPageChangeListener());
 
 
-        container.post(new Runnable() {
+        vpCalender.post(new Runnable() {
             @Override
             public void run() {
                 initEventDays((CalendarView) adapter.getChildView(0));

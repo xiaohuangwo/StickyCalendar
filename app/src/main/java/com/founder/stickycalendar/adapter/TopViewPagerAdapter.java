@@ -38,6 +38,8 @@ public class TopViewPagerAdapter extends PagerAdapter {
      */
     boolean isFirstIn = true;
 
+
+
     public TopViewPagerAdapter(Context context, List<View> lists, int INIT_PAGER_INDEX, Calendar calendar) {
         this.context = context;
         viewLists = lists;

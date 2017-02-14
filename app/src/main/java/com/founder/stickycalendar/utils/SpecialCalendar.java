@@ -51,6 +51,7 @@ public class SpecialCalendar {
             if (i < weekdayOfMonth) {
                 // 前一个月
                 int day = daySizeLastMonth - weekdayOfMonth + i + 1;
+                cal.clear();
                 cal.set(Calendar.YEAR, year);
                 cal.set(Calendar.MONTH, month);
                 cal.add(Calendar.MONTH, -1);
@@ -66,12 +67,14 @@ public class SpecialCalendar {
                     dateBean.setIsCurrentDay(true);
                     currentPosition = i;
                 }
+                cal.clear();
                 cal.set(Calendar.YEAR, year);
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, day);
                 dateBean.setMonthType(DateBean.CURRENT_MONTH);
             } else {
                 // 下一个月
+                cal.clear();
                 cal.set(year, month, lastMonthDay);
                 cal.add(Calendar.MONTH, 1);
                 lastMonthDay++;

@@ -17,57 +17,20 @@
         android:textColor="@color/white"
         android:textSize="17sp" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dip"
-        android:paddingTop="10dip">
-
-        <TextView
-            style="@style/weekName"
-            android:text="日"
-            android:textColor="#177ed6" />
-
-        <TextView
-            style="@style/weekName"
-            android:text="一" />
-
-        <TextView
-            style="@style/weekName"
-            android:text="二" />
-
-        <TextView
-            style="@style/weekName"
-            android:text="三" />
-
-        <TextView
-            style="@style/weekName"
-            android:text="四" />
-
-        <TextView
-            style="@style/weekName"
-            android:text="五" />
-
-        <TextView
-            style="@style/weekName"
-            android:text="六"
-            android:textColor="#177ed6" />
-    </LinearLayout>
-
+    <include layout="@layout/calendar_title" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_calender"
         android:layout_width="match_parent"
-        android:tag="vp_calender"
-        android:layout_height="@dimen/calender_height" />
+        android:layout_height="@dimen/calender_height"
+        android:tag="vp_calender" />
 
     <ListView
         android:id="@+id/view_content"
         android:layout_width="match_parent"
-        android:tag="view_content"
         android:layout_height="match_parent"
-        android:background="@color/calendar_text_color" />
+        android:background="@color/calendar_text_color"
+        android:tag="view_content" />
 
 </com.founder.stickycalendar.view.ContainerLayout>
 
